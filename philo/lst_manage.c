@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:03:33 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/31 16:05:01 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/03/31 18:31:52 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_list	*ft_lstnew(t_args *arg, int i)
 	new->arg = arg;
 	new->id_ph = i + 1;
 	new->eat = 0;
+	new->die = get_time();
 	new->fork = 1;
 	new->next = NULL;
 	return (new);

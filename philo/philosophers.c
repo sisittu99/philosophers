@@ -6,13 +6,11 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/31 17:48:31 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/03/31 19:06:17 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-// pthread_mutex_t mutex;
 
 void	define_args(int argc, char **argv, t_args *arg)
 {
@@ -38,6 +36,34 @@ void	write_sms(t_list *list, char *str)
 	pthread_mutex_destroy(&list->arg->mutex_write);
 }
 
+int	ft_nbr_eat(t_list *list)
+{
+	t_list	*tmp;
+	int		n;
+	int		eat;
+
+	tmp = list->next;
+	n = list->id_ph;
+	while (tmp->id_ph != n)
+	{
+		if (list->eat < tmp->eat)
+			eat = -1;
+		else
+			eat = 1;
+		tmp = tmp->next;
+	}
+	if (eat == -1)
+		return (eat);
+	tmp = tmp->next;
+	while (tmp->id_ph != n && list->eat == tmp->eat)
+	{
+		tmp = tmp->next;
+		if (tmp->id_ph == n)
+			return (-1);
+	}
+	return (1);
+}
+
 void	*routine(void *list)
 {
 	t_list	**tmp;
@@ -47,9 +73,14 @@ void	*routine(void *list)
 	while (((t_list *)list)->arg->must_eat != -1)
 	{
 		i = 0;
+		if (get_time() - ((t_list *)list)->die == ((t_list *)list)->arg->time_die)
+		{
+			write_sms((t_list *) list, "DIED");
+			return (0);
+		}
 		pthread_mutex_lock(&((t_list *)list)->arg->mutex);
 		if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1
-			&& ((t_list *)list)->eat == (*tmp)->eat)
+			&& ft_nbr_eat((t_list *)list) == -1)
 		{
 			write_sms((t_list *) list, "is taking a fork");
 			((t_list *)list)->fork = 0;
@@ -59,12 +90,13 @@ void	*routine(void *list)
 		pthread_mutex_unlock(&((t_list *)list)->arg->mutex);
 		if (i == -1)
 		{
+			((t_list *)list)->die = get_time();
 			write_sms((t_list *) list, "is eating");
 			ft_usleep(((t_list *)list)->arg->time_eat);
 			((t_list *)list)->eat++;
 			((t_list *)list)->fork = 1;
 			(*tmp)->fork = 1;
-			((t_list *)list)->arg->must_eat -= 1;
+			// ((t_list *)list)->arg->must_eat -= 1;
 			i = 1;
 		}
 		if (i == 1)
@@ -93,7 +125,6 @@ int	ft_ph_init(t_list **list, t_args *arg)
 		*list = (*list)->next;
 	(*list)->next = tmp;
 	*list = (*list)->next;
-	// *list = (*list)->next;
 	return (0);
 }
 

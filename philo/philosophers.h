@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:18:48 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/31 16:02:30 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/03/31 18:31:08 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+// * STRUCT DATA * //
 
 typedef struct s_args
 {
@@ -33,12 +35,15 @@ typedef struct s_args
 	int				start_time;
 }				t_args;
 
+// * LIST * //
+
 typedef struct s_list
 {
 	t_args			*arg;
 	int				fork;
 	int				id_ph;
 	int				eat;
+	int				die;
 	struct s_list	*next;
 }				t_list;
 
