@@ -6,17 +6,17 @@
 #    By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/30 15:29:33 by fdrudi            #+#    #+#              #
-#    Updated: 2022/03/30 18:39:32 by fdrudi           ###   ########.fr        #
+#    Updated: 2022/03/31 12:08:30 by fdrudi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	philo
 
-SRC			=	philosophers.c philo_utils.c lst_manage.c\
+SRC			=	philosophers.c philo_utils.c lst_manage.c time.c\
 
 OBJ			=	$(SRC:.c=.o)
 
-CC			=	gcc -pthread -fsanitize=address
+CC			=	gcc -pthread #-fsanitize=address
 
 RM			=	rm -f
 

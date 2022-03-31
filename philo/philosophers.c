@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/30 19:32:44 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/03/31 12:08:19 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	*routine(void *arg)
 	pthread_mutex_lock(&tmp->arg->mutex);
 	usleep(100);
 	printf("nbr Phil : %d\n", tmp->fork);
+	printf("ID Phil : %d\n", tmp->id_ph);
 	printf("Hello World !\n");
 	pthread_mutex_unlock(&tmp->arg->mutex);
 	return (0);
@@ -47,7 +48,7 @@ int	ft_ph_init(t_list **list, t_args *arg)
 	i = -1;
 	while (++i < arg->nbr_philo)
 	{
-		new = ft_lstnew(arg);
+		new = ft_lstnew(arg, i);
 		ft_lstadd_back(list, new);
 	}
 	tmp = (*list);
@@ -63,6 +64,7 @@ int	ft_main2(t_args *arg)
 	t_list	*list;
 	int		i;
 
+	list = NULL;
 	ft_ph_init(&list, arg);
 	i = -1;
 	pthread_mutex_init(&list->arg->mutex, NULL);
@@ -78,7 +80,7 @@ int	ft_main2(t_args *arg)
 		if (pthread_join(arg->ph[i], NULL) != 0)
 			return (printf("Error: didn't join\n"));
 	pthread_mutex_destroy(&list->arg->mutex);
-	// ft_lst_delete(&list);							FREE LISTA DA SISTEMARE
+	ft_lst_delete(&list);
 	return (0);
 }
 

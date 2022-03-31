@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:18:48 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/30 19:32:41 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/03/31 12:08:28 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef struct s_args
 {
@@ -34,17 +35,18 @@ typedef struct s_list
 {
 	t_args			*arg;
 	int				fork;
+	int				id_ph;
 	struct s_list	*next;
 }				t_list;
 
 // * UTILS * //
 
 int		ft_atoi(const char *str);
-t_list	*ft_lstnew(t_args *arg);
+t_list	*ft_lstnew(t_args *arg, int i);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lst_delete(t_list **list);
-// void	ft_lstdelone(t_list *lst, void (*del)(int *));
-// void	ft_lstclear(t_list **lst, void (*del)(int *));
+// void	ft_lstdelone(t_list *lst, void (*del)(void *));
+// void	ft_lstclear(t_list **lst, void (*del)(void *));
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:03:33 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/30 19:32:36 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/03/31 12:08:24 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_list	*ft_lstnew(t_args *arg)
+t_list	*ft_lstnew(t_args *arg, int i)
 {
 	t_list	*new;
 
@@ -23,6 +23,7 @@ t_list	*ft_lstnew(t_args *arg)
 	if (!new->arg)
 		return (NULL);
 	new->arg = arg;
+	new->id_ph = i + 1;
 	new->fork = 1;
 	new->next = NULL;
 	return (new);
@@ -55,14 +56,15 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 void	ft_lst_delete(t_list **list)
 {
 	t_list	*tmp;
+	int		i;
 
 	if (*list == NULL)
 		return ;
 	tmp = *list;
-	while (*list != NULL)
+	i = (*list)->arg->nbr_philo;
+	while (i--)
 	{
 		tmp = (*list)->next;
-		free((*list)->arg);
 		free(*list);
 		*list = tmp;
 	}
