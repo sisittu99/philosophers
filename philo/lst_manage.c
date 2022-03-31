@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:03:33 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/31 12:08:24 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/03/31 16:05:01 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_list	*ft_lstnew(t_args *arg, int i)
 		return (NULL);
 	new->arg = arg;
 	new->id_ph = i + 1;
+	new->eat = 0;
 	new->fork = 1;
 	new->next = NULL;
 	return (new);
@@ -69,30 +70,3 @@ void	ft_lst_delete(t_list **list)
 		*list = tmp;
 	}
 }
-
-// void	ft_lstdelone(t_list *lst, void (*del)(t_arg *))
-// {
-// 	t_list	*tmp;
-
-// 	tmp = lst;
-// 	if (lst != NULL)
-// 	{
-// 		lst = tmp->next;
-// 		del(&tmp->arg);
-// 		free(tmp);
-// 	}
-// }
-
-// void	ft_lstclear(t_list **lst, void (*del)(t_arg *))
-// {
-// 	t_list	*tmp;
-
-// 	if (*lst == NULL)
-// 		return ;
-// 	while (*lst != NULL)
-// 	{
-// 		tmp = (*lst)->next;
-// 		ft_lstdelone(*lst, del);
-// 		*lst = tmp;
-// 	}
-// }

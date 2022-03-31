@@ -6,11 +6,13 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/31 12:08:19 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/03/31 17:48:31 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+// pthread_mutex_t mutex;
 
 void	define_args(int argc, char **argv, t_args *arg)
 {
@@ -19,23 +21,58 @@ void	define_args(int argc, char **argv, t_args *arg)
 	arg->time_die = ft_atoi(argv[2]);
 	arg->time_eat = ft_atoi(argv[3]);
 	arg->time_sleep = ft_atoi(argv[4]);
+	arg->start_time = get_time();
 	if (argc == 6)
 		arg->must_eat = ft_atoi(argv[5]);
 	else
 		arg->must_eat = 0;
 }
 
-void	*routine(void *arg)
+void	write_sms(t_list *list, char *str)
 {
-	t_list	*tmp;
+	pthread_mutex_init(&list->arg->mutex_write, NULL);
+	pthread_mutex_lock(&list->arg->mutex_write);
+	printf("%d ms %d %s\n", get_time() - list->arg->start_time,
+		list->id_ph, str);
+	pthread_mutex_unlock(&list->arg->mutex_write);
+	pthread_mutex_destroy(&list->arg->mutex_write);
+}
 
-	tmp = (t_list *) arg;
-	pthread_mutex_lock(&tmp->arg->mutex);
-	usleep(100);
-	printf("nbr Phil : %d\n", tmp->fork);
-	printf("ID Phil : %d\n", tmp->id_ph);
-	printf("Hello World !\n");
-	pthread_mutex_unlock(&tmp->arg->mutex);
+void	*routine(void *list)
+{
+	t_list	**tmp;
+	int		i;
+
+	tmp = &((t_list *)list)->next;
+	while (((t_list *)list)->arg->must_eat != -1)
+	{
+		i = 0;
+		pthread_mutex_lock(&((t_list *)list)->arg->mutex);
+		if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1
+			&& ((t_list *)list)->eat == (*tmp)->eat)
+		{
+			write_sms((t_list *) list, "is taking a fork");
+			((t_list *)list)->fork = 0;
+			(*tmp)->fork = 0;
+			i = -1;
+		}
+		pthread_mutex_unlock(&((t_list *)list)->arg->mutex);
+		if (i == -1)
+		{
+			write_sms((t_list *) list, "is eating");
+			ft_usleep(((t_list *)list)->arg->time_eat);
+			((t_list *)list)->eat++;
+			((t_list *)list)->fork = 1;
+			(*tmp)->fork = 1;
+			((t_list *)list)->arg->must_eat -= 1;
+			i = 1;
+		}
+		if (i == 1)
+		{
+			write_sms((t_list *) list, "is sleeping");
+			ft_usleep(((t_list *)list)->arg->time_sleep);
+		}
+	}
 	return (0);
 }
 
@@ -56,6 +93,7 @@ int	ft_ph_init(t_list **list, t_args *arg)
 		*list = (*list)->next;
 	(*list)->next = tmp;
 	*list = (*list)->next;
+	// *list = (*list)->next;
 	return (0);
 }
 
@@ -70,7 +108,7 @@ int	ft_main2(t_args *arg)
 	pthread_mutex_init(&list->arg->mutex, NULL);
 	while (++i < arg->nbr_philo)
 	{
-		if (pthread_create(&arg->ph[i], NULL, &routine, list) != 0)
+		if (pthread_create(&arg->ph[i], NULL, routine, list) != 0)
 			return (printf("Error: didn't create\n"));
 		if (i != arg->nbr_philo - 1)
 			list = list->next;
