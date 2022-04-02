@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/31 19:06:17 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/02 11:43:11 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	define_args(int argc, char **argv, t_args *arg)
 {
-	(void) argc;
+	(void)argc;
 	arg->nbr_philo = ft_atoi(argv[1]);
 	arg->time_die = ft_atoi(argv[2]);
 	arg->time_eat = ft_atoi(argv[3]);
@@ -36,33 +36,6 @@ void	write_sms(t_list *list, char *str)
 	pthread_mutex_destroy(&list->arg->mutex_write);
 }
 
-int	ft_nbr_eat(t_list *list)
-{
-	t_list	*tmp;
-	int		n;
-	int		eat;
-
-	tmp = list->next;
-	n = list->id_ph;
-	while (tmp->id_ph != n)
-	{
-		if (list->eat < tmp->eat)
-			eat = -1;
-		else
-			eat = 1;
-		tmp = tmp->next;
-	}
-	if (eat == -1)
-		return (eat);
-	tmp = tmp->next;
-	while (tmp->id_ph != n && list->eat == tmp->eat)
-	{
-		tmp = tmp->next;
-		if (tmp->id_ph == n)
-			return (-1);
-	}
-	return (1);
-}
 
 void	*routine(void *list)
 {
@@ -75,14 +48,14 @@ void	*routine(void *list)
 		i = 0;
 		if (get_time() - ((t_list *)list)->die == ((t_list *)list)->arg->time_die)
 		{
-			write_sms((t_list *) list, "DIED");
+			write_sms((t_list *)list, "DIED");
 			return (0);
 		}
 		pthread_mutex_lock(&((t_list *)list)->arg->mutex);
 		if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1
-			&& ft_nbr_eat((t_list *)list) == -1)
+			&& ft_nbr_eat((t_list *)list) == 0)
 		{
-			write_sms((t_list *) list, "is taking a fork");
+			write_sms((t_list *)list, "is taking a fork");
 			((t_list *)list)->fork = 0;
 			(*tmp)->fork = 0;
 			i = -1;
@@ -91,7 +64,7 @@ void	*routine(void *list)
 		if (i == -1)
 		{
 			((t_list *)list)->die = get_time();
-			write_sms((t_list *) list, "is eating");
+			write_sms((t_list *)list, "is eating");
 			ft_usleep(((t_list *)list)->arg->time_eat);
 			((t_list *)list)->eat++;
 			((t_list *)list)->fork = 1;
@@ -101,7 +74,7 @@ void	*routine(void *list)
 		}
 		if (i == 1)
 		{
-			write_sms((t_list *) list, "is sleeping");
+			write_sms((t_list *)list, "is sleeping");
 			ft_usleep(((t_list *)list)->arg->time_sleep);
 		}
 	}
@@ -155,8 +128,8 @@ int	ft_main2(t_args *arg)
 
 int	main(int argc, char **argv)
 {
-	t_args		arg;
-	int			i;
+	t_args	arg;
+	int		i;
 
 	if (argc != 6 && argc != 5)
 	{
@@ -164,7 +137,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	define_args(argc, argv, &arg);
-	arg.ph = (pthread_t *) malloc (sizeof(pthread_t) * arg.nbr_philo);
+	arg.ph = (pthread_t *)malloc(sizeof(pthread_t) * arg.nbr_philo);
 	if (!arg.ph)
 		return (1);
 	i = -1;

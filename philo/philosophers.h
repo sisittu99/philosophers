@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:18:48 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/31 18:31:08 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/02 11:26:42 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,9 @@ void	ft_lst_delete(t_list **list);
 int		get_time(void);
 void	ft_usleep(long int time_in_ms);
 
+// * CHECKERS * //
+
+int		ft_nbr_eat(t_list *list);
+int		ft_time_die(t_list *list);
 
 #endif
