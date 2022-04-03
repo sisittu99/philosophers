@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:12:57 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/03/31 12:08:26 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/02 16:20:12 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	get_time(void)
 	static struct timeval	tm;
 
 	gettimeofday(&tm, NULL);
-	return ((tm.tv_sec * (uint64_t)1000) + (tm.tv_usec / 1000));
+	return ((tm.tv_sec * (u_int64_t)1000) + (tm.tv_usec / 1000));
 }
 
 void	ft_usleep(long int time_in_ms)

@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/02 11:43:11 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/02 16:25:48 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*routine(void *list)
 		if (get_time() - ((t_list *)list)->die == ((t_list *)list)->arg->time_die)
 		{
 			write_sms((t_list *)list, "DIED");
-			return (0);
+			exit (0);
 		}
 		pthread_mutex_lock(&((t_list *)list)->arg->mutex);
 		if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1
@@ -129,7 +129,6 @@ int	ft_main2(t_args *arg)
 int	main(int argc, char **argv)
 {
 	t_args	arg;
-	int		i;
 
 	if (argc != 6 && argc != 5)
 	{
@@ -140,7 +139,6 @@ int	main(int argc, char **argv)
 	arg.ph = (pthread_t *)malloc(sizeof(pthread_t) * arg.nbr_philo);
 	if (!arg.ph)
 		return (1);
-	i = -1;
 	if (ft_main2(&arg) != 0)
 		return (1);
 	return (0);

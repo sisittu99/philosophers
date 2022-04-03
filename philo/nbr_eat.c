@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 11:20:02 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/02 12:05:39 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/02 17:58:44 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	ft_min_nbr(t_list *list, int n)
 	min = list->eat;
 	while (tmp->id_ph != n)
 	{
-		if (tmp->eat < min)
-			min = tmp->eat;
+		if (tmp->eat <= min)
+			return (1);
 		tmp = tmp->next;
 	}
-	return (min);
+	return (0);
 }
 
 int	ft_max_nbr_die(t_list *list, int n)
@@ -53,11 +53,11 @@ int	ft_max_nbr_die(t_list *list, int n)
 	max = list->die;
 	while (tmp->id_ph != n)
 	{
-		if (tmp->die > max)
-			max = tmp->die;
+		if (tmp->die >= max)
+			return (1);
 		tmp = tmp->next;
 	}
-	return (max);
+	return (0);
 }
 
 int	ft_min_nbr_die(t_list *list, int n)
@@ -76,25 +76,71 @@ int	ft_min_nbr_die(t_list *list, int n)
 	return (min);
 }
 
-int	ft_nbr_eat(t_list *list)
+int	ft_dup_nbr_die(t_list *list, int n)
 {
 	t_list	*tmp;
-	int		n;
+	int		dup;
 
 	tmp = list->next;
+	dup = list->die;
+	while (tmp->id_ph != n)
+	{
+		if (tmp->die == dup)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	ft_dup_nbr(t_list *list, int n)
+{
+	t_list	*tmp;
+	int		dup;
+
+	tmp = list->next;
+	dup = list->eat;
+	while (tmp->id_ph != n)
+	{
+		if (tmp->eat == dup)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	ft_nbr_eat(t_list *list)
+{
+	// t_list	*tmp;
+	int		n;
+
+	// tmp = list->next;
 	n = list->id_ph;
-	if (list->die == ft_max_nbr_die(list, n))
+	if (ft_max_nbr_die(list, n) == 0)
+	{
+		printf("| * Test 1 * |\n");
 		return (0);
-	else if (list->die > ft_min_nbr_die(list, n) && list->eat == ft_min_nbr(list, n))
+	}
+	else if (ft_min_nbr(list, n) == 0)
+	{
+		printf("| * Test 2 * |\n");
 		return (0);
-	else if (list->die > ft_min_nbr_die(list, n) && list->eat < ft_max_nbr(list, n))
-		return (0);
-	else if (list->die == ft_min_nbr_die(list, n) && list->eat < ft_max_nbr(list, n))
-		return (0);
-	else if (list->die > ft_min_nbr_die(list, n) && list->eat == ft_max_nbr(list, n))
-		return (0);
-	else if (list->die == ft_min_nbr_die(list, n) && list->eat == ft_max_nbr(list, n))
-		return (0);
+	}
+	else if (list->die > ft_min_nbr_die(list, n))
+	{
+		printf("| * Test 3 * |\n");
+		if (list->eat < ft_max_nbr(list, n))
+			return (0);
+		else if (list->eat == ft_max_nbr(list, n))
+			return (0);
+	}
+	else if (list->die == ft_min_nbr_die(list, n))
+	{
+		printf("| * Test 4 * |\n");
+		if (list->eat < ft_max_nbr(list, n))
+			return (0);
+		else if (list->eat == ft_max_nbr(list, n))
+			return (0);
+	}
 	// tmp = tmp->next;
 	// while (tmp->id_ph != n && list->eat == tmp->eat)
 	// {
@@ -102,5 +148,6 @@ int	ft_nbr_eat(t_list *list)
 	// 	if (tmp->id_ph == n)
 	// 		return (0);
 	// }
+	printf("| * EXIT * |\n");
 	return (1);
 }
