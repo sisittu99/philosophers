@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:18:48 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/02 11:26:42 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/03 12:11:53 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_list
 	int				id_ph;
 	int				eat;
 	int				die;
+	int				ch;
 	struct s_list	*next;
 }				t_list;
 
