@@ -6,14 +6,13 @@
 #    By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/30 15:29:33 by fdrudi            #+#    #+#              #
-#    Updated: 2022/04/02 11:26:53 by fdrudi           ###   ########.fr        #
+#    Updated: 2022/04/03 17:01:12 by fdrudi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	philo
 
 SRC			=	philosophers.c philo_utils.c lst_manage.c time.c\
-				nbr_eat.c nbr_die.c\
 
 OBJ			=	$(SRC:.c=.o)
 

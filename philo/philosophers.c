@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/03 13:18:06 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/03 17:55:52 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,50 +35,83 @@ void	write_sms(t_list *list, char *str)
 		pthread_mutex_unlock(&list->arg->mutex_write);
 }
 
-
 void	*routine(void *list)
 {
 	t_list	**tmp;
 	int		i;
 
 	tmp = &((t_list *)list)->next;
-	while (((t_list *)list)->arg->must_eat != -1)
+	while (1)
 	{
 		i = 0;
 		if (get_time() - ((t_list *)list)->die >= ((t_list *)list)->arg->time_die)
 		{
+			printf("\n| %d | %d |\n", ((t_list *)list)->id_ph, (get_time() - ((t_list *)list)->die));
 			write_sms((t_list *)list, "DIED");
 			exit (0);
 		}
-		pthread_mutex_lock(&((t_list *)list)->arg->mutex);
-		pthread_mutex_lock(&(*tmp)->arg->mutex);
-		// if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1)
+
+		// pthread_mutex_lock(&((t_list *)list)->arg->mutex);
+		// if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1
+		// 	&& ((t_list *)list)->ch == 0)
 		// {
-			write_sms((t_list *)list, "is taking a fork");
-		// 	// ((t_list *)list)->fork = 0;
-		// 	// (*tmp)->fork = 0;
+		// 	write_sms((t_list *)list, "is taking a fork");
+		// 	((t_list *)list)->fork = 0;
+		// 	(*tmp)->fork = 0;
 		// 	((t_list *)list)->ch = 1;
 		// 	i = -1;
 		// }
+		// pthread_mutex_unlock(&((t_list *)list)->arg->mutex);
 		// if (i == -1)
 		// {
+		// 	((t_list *)list)->die = get_time();
+		// 	write_sms((t_list *)list, "is eating");
+		// 	ft_usleep(((t_list *)list)->arg->time_eat);
+		// 	((t_list *)list)->eat++;
+		// 	((t_list *)list)->fork = 1;
+		// 	(*tmp)->fork = 1;
+		// 	i = 1;
+		// }
+
+
+
+
+		pthread_mutex_lock(&((t_list *)list)->arg->mutex);
+		pthread_mutex_lock(&(*tmp)->arg->mutex_b);
+		if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1)
+		{
+			printf("\nPRE EAT -> | %d | %d |\n", ((t_list *)list)->id_ph, (get_time() - ((t_list *)list)->die));
+			write_sms((t_list *)list, "is taking the left fork");
+			write_sms((t_list *)list, "is taking the right fork");
+			((t_list *)list)->fork = 0;
+			(*tmp)->fork = 0;
+			((t_list *)list)->ch = 1;
+			i = -1;
+		}
+
+		pthread_mutex_unlock(&((t_list *)list)->arg->mutex);
+		pthread_mutex_unlock(&(*tmp)->arg->mutex_b);
+		if (i == -1)
+		{
+			// pthread_mutex_lock(&((t_list *)list)->arg->mutex_eat);
 			((t_list *)list)->die = get_time();
 			write_sms((t_list *)list, "is eating");
 			ft_usleep(((t_list *)list)->arg->time_eat);
-			((t_list *)list)->eat++;
 			((t_list *)list)->fork = 1;
 			(*tmp)->fork = 1;
-			((t_list *)list)->ch = 0;
-			// ((t_list *)list)->arg->must_eat -= 1;
 			i = 1;
-		// }
-		pthread_mutex_unlock(&((t_list *)list)->arg->mutex);
-		pthread_mutex_unlock(&(*tmp)->arg->mutex);
+			printf("\nAFTER EAT -> | %d | %d |\n", ((t_list *)list)->id_ph, (get_time() - ((t_list *)list)->die));
+			// pthread_mutex_unlock(&((t_list *)list)->arg->mutex_eat);
+		}
+
 		if (i == 1)
 		{
 			write_sms((t_list *)list, "is sleeping");
 			ft_usleep(((t_list *)list)->arg->time_sleep);
+			((t_list *)list)->ch = 0;
 		}
+		// else
+		// 	write_sms((t_list *)list, "is thinking");
 	}
 	return (0);
 }
@@ -112,6 +145,8 @@ int	ft_main2(t_args *arg)
 	ft_ph_init(&list, arg);
 	i = 0;
 	pthread_mutex_init(&list->arg->mutex, NULL);
+	pthread_mutex_init(&list->arg->mutex_b, NULL);
+	pthread_mutex_init(&list->arg->mutex_eat, NULL);
 	pthread_mutex_init(&list->arg->mutex_write, NULL);
 	while (i < arg->nbr_philo)
 	{
@@ -126,6 +161,8 @@ int	ft_main2(t_args *arg)
 		if (pthread_join(arg->ph[i], NULL) != 0)
 			return (printf("Error: didn't join\n"));
 	pthread_mutex_destroy(&list->arg->mutex);
+	pthread_mutex_destroy(&list->arg->mutex_b);
+	pthread_mutex_destroy(&list->arg->mutex_eat);
 	pthread_mutex_destroy(&list->arg->mutex_write);
 	ft_lst_delete(&list);
 	return (0);

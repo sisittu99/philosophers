@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:18:48 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/03 12:11:53 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/03 17:01:38 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_args
 	int				must_eat;
 	pthread_t		*ph;
 	pthread_mutex_t	mutex;
+	pthread_mutex_t	mutex_b;
+	pthread_mutex_t	mutex_eat;
 	pthread_mutex_t	mutex_write;
 	int				start_time;
 }				t_args;
@@ -60,10 +62,5 @@ void	ft_lst_delete(t_list **list);
 
 int		get_time(void);
 void	ft_usleep(long int time_in_ms);
-
-// * CHECKERS * //
-
-int		ft_nbr_eat(t_list *list);
-int		ft_time_die(t_list *list);
 
 #endif
