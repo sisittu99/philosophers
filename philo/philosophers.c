@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/04 15:02:38 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/04 17:26:43 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*routine(void *list)
 			((t_list *)list)->arg->must_eat = -1;
 			pthread_mutex_unlock(&((t_list *)list)->mutex);
 			pthread_mutex_unlock(&(*tmp)->mutex);
-			return ((void*)1);
+			return (0);
 		}
 		else if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1)
 		{
@@ -80,7 +80,7 @@ int	ft_main2(t_args *arg)
 	i = 0;
 	pthread_mutex_init(&list->mutex, NULL);
 	// pthread_mutex_init(&list->mutex_eat, NULL);
-	pthread_mutex_init(&list->arg->mutex_write, NULL);
+	pthread_mutex_init(&list->mutex_write, NULL);
 	while (i < arg->nbr_philo)
 	{
 		if (pthread_create(&arg->ph[i], NULL, routine, list) != 0)
@@ -89,11 +89,14 @@ int	ft_main2(t_args *arg)
 			list = list->next;
 		i++;
 	}
-	i = -1;
+	// i = -1;
 	r = 0;
-	while (++i < arg->nbr_philo)
+	int j = 0;
+	while (i--)
 	{
-		if (pthread_join(arg->ph[i], (void *)&r) != 0)
+		j = pthread_join(arg->ph[i], (void *)&r);
+		printf("JOIN : %d\n", j);
+		if ( j != 0)
 			return (printf("Error: %d didn't join\n", i + 1));
 		if (r == 1)
 			return (1);
@@ -101,7 +104,7 @@ int	ft_main2(t_args *arg)
 
 	pthread_mutex_destroy(&list->mutex);
 	// pthread_mutex_destroy(&list->mutex_eat);
-	pthread_mutex_destroy(&list->arg->mutex_write);
+	pthread_mutex_destroy(&list->mutex_write);
 	ft_lst_delete(&list);
 	return (0);
 }

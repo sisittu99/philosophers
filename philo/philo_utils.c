@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:27:31 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/04 14:58:34 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/04 17:19:21 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	write_sms(t_list *list, char *str)
 {
 	if (list->arg->must_eat != -1)
 	{
-		pthread_mutex_lock(&list->arg->mutex_write);
+		pthread_mutex_lock(&list->mutex_write);
 		printf("%d ms %d %s\n", get_time() - list->arg->start_time,
 			list->id_ph, str);
 		if (str[0] != 'D')
-			pthread_mutex_unlock(&list->arg->mutex_write);
+			pthread_mutex_unlock(&list->mutex_write);
 	}
 }
 
