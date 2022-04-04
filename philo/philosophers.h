@@ -41,8 +41,8 @@ typedef struct s_list
 	int				fork;
 	int				id_ph;
 	int				die;
+	int				eat;
 	pthread_mutex_t	mutex;
-	// pthread_mutex_t	mutex_b;
 	pthread_mutex_t	mutex_eat;
 	pthread_mutex_t	mutex_write;
 	struct s_list	*next;
