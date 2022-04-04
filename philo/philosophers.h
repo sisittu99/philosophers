@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:18:48 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/04 17:38:10 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/04 19:36:59 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,19 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 
+// * ROUTINE * //
+
+void	*routine(void *list);
+void	write_sms(t_list *list, char *str);
+
 // * UTILS * //
 
-int		ft_ph_init(t_list **list, t_args *arg);
 int		define_args(int argc, char **argv, t_args *arg);
-void	write_sms(t_list *list, char *str);
 int		ft_atoi(const char *str);
+
+// * LIST UTILS *//
+
+int		ft_ph_init(t_list **list, t_args *arg);
 t_list	*ft_lstnew(t_args *arg, int i);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
