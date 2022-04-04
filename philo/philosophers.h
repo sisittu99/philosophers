@@ -30,10 +30,6 @@ typedef struct s_args
 	int				time_sleep;
 	int				must_eat;
 	pthread_t		*ph;
-	pthread_mutex_t	mutex;
-	pthread_mutex_t	mutex_b;
-	pthread_mutex_t	mutex_eat;
-	pthread_mutex_t	mutex_write;
 	int				start_time;
 }				t_args;
 
@@ -44,9 +40,11 @@ typedef struct s_list
 	t_args			*arg;
 	int				fork;
 	int				id_ph;
-	int				eat;
 	int				die;
-	int				ch;
+	pthread_mutex_t	mutex;
+	// pthread_mutex_t	mutex_b;
+	pthread_mutex_t	mutex_eat;
+	pthread_mutex_t	mutex_write;
 	struct s_list	*next;
 }				t_list;
 

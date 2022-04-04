@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/03 17:55:52 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/04 11:22:25 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	define_args(int argc, char **argv, t_args *arg)
 
 void	write_sms(t_list *list, char *str)
 {
-	pthread_mutex_lock(&list->arg->mutex_write);
+	pthread_mutex_lock(&list->mutex_write);
 	printf("%d ms %d %s\n", get_time() - list->arg->start_time,
 		list->id_ph, str);
 	if (str[0] != 'D')
-		pthread_mutex_unlock(&list->arg->mutex_write);
+		pthread_mutex_unlock(&list->mutex_write);
 }
 
 void	*routine(void *list)
@@ -44,40 +44,15 @@ void	*routine(void *list)
 	while (1)
 	{
 		i = 0;
+
+		pthread_mutex_lock(&((t_list *)list)->mutex);
+		pthread_mutex_lock(&(*tmp)->mutex);
 		if (get_time() - ((t_list *)list)->die >= ((t_list *)list)->arg->time_die)
 		{
 			printf("\n| %d | %d |\n", ((t_list *)list)->id_ph, (get_time() - ((t_list *)list)->die));
 			write_sms((t_list *)list, "DIED");
 			exit (0);
 		}
-
-		// pthread_mutex_lock(&((t_list *)list)->arg->mutex);
-		// if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1
-		// 	&& ((t_list *)list)->ch == 0)
-		// {
-		// 	write_sms((t_list *)list, "is taking a fork");
-		// 	((t_list *)list)->fork = 0;
-		// 	(*tmp)->fork = 0;
-		// 	((t_list *)list)->ch = 1;
-		// 	i = -1;
-		// }
-		// pthread_mutex_unlock(&((t_list *)list)->arg->mutex);
-		// if (i == -1)
-		// {
-		// 	((t_list *)list)->die = get_time();
-		// 	write_sms((t_list *)list, "is eating");
-		// 	ft_usleep(((t_list *)list)->arg->time_eat);
-		// 	((t_list *)list)->eat++;
-		// 	((t_list *)list)->fork = 1;
-		// 	(*tmp)->fork = 1;
-		// 	i = 1;
-		// }
-
-
-
-
-		pthread_mutex_lock(&((t_list *)list)->arg->mutex);
-		pthread_mutex_lock(&(*tmp)->arg->mutex_b);
 		if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1)
 		{
 			printf("\nPRE EAT -> | %d | %d |\n", ((t_list *)list)->id_ph, (get_time() - ((t_list *)list)->die));
@@ -85,12 +60,9 @@ void	*routine(void *list)
 			write_sms((t_list *)list, "is taking the right fork");
 			((t_list *)list)->fork = 0;
 			(*tmp)->fork = 0;
-			((t_list *)list)->ch = 1;
 			i = -1;
 		}
 
-		pthread_mutex_unlock(&((t_list *)list)->arg->mutex);
-		pthread_mutex_unlock(&(*tmp)->arg->mutex_b);
 		if (i == -1)
 		{
 			// pthread_mutex_lock(&((t_list *)list)->arg->mutex_eat);
@@ -101,14 +73,15 @@ void	*routine(void *list)
 			(*tmp)->fork = 1;
 			i = 1;
 			printf("\nAFTER EAT -> | %d | %d |\n", ((t_list *)list)->id_ph, (get_time() - ((t_list *)list)->die));
-			// pthread_mutex_unlock(&((t_list *)list)->arg->mutex_eat);
+			// pthread_mutex_unlock(&((t_list *)list)->mutex_eat);
 		}
+		pthread_mutex_unlock(&((t_list *)list)->mutex);
+		pthread_mutex_unlock(&(*tmp)->mutex);
 
 		if (i == 1)
 		{
 			write_sms((t_list *)list, "is sleeping");
 			ft_usleep(((t_list *)list)->arg->time_sleep);
-			((t_list *)list)->ch = 0;
 		}
 		// else
 		// 	write_sms((t_list *)list, "is thinking");
@@ -144,10 +117,10 @@ int	ft_main2(t_args *arg)
 	list = NULL;
 	ft_ph_init(&list, arg);
 	i = 0;
-	pthread_mutex_init(&list->arg->mutex, NULL);
-	pthread_mutex_init(&list->arg->mutex_b, NULL);
-	pthread_mutex_init(&list->arg->mutex_eat, NULL);
-	pthread_mutex_init(&list->arg->mutex_write, NULL);
+	pthread_mutex_init(&list->mutex, NULL);
+	// pthread_mutex_init(&list->arg->mutex, NULL);
+	pthread_mutex_init(&list->mutex_eat, NULL);
+	pthread_mutex_init(&list->mutex_write, NULL);
 	while (i < arg->nbr_philo)
 	{
 		if (pthread_create(&arg->ph[i], NULL, routine, list) != 0)
@@ -160,10 +133,10 @@ int	ft_main2(t_args *arg)
 	while (++i < arg->nbr_philo)
 		if (pthread_join(arg->ph[i], NULL) != 0)
 			return (printf("Error: didn't join\n"));
-	pthread_mutex_destroy(&list->arg->mutex);
-	pthread_mutex_destroy(&list->arg->mutex_b);
-	pthread_mutex_destroy(&list->arg->mutex_eat);
-	pthread_mutex_destroy(&list->arg->mutex_write);
+	pthread_mutex_destroy(&list->mutex);
+	// pthread_mutex_destroy(&list->arg->mutex);
+	pthread_mutex_destroy(&list->mutex_eat);
+	pthread_mutex_destroy(&list->mutex_write);
 	ft_lst_delete(&list);
 	return (0);
 }

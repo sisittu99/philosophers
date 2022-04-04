@@ -24,8 +24,6 @@ t_list	*ft_lstnew(t_args *arg, int i)
 		return (NULL);
 	new->arg = arg;
 	new->id_ph = i + 1;
-	new->eat = 0;
-	new->ch = 0;
 	new->die = get_time();
 	new->fork = 1;
 	new->next = NULL;
