@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/04 19:35:13 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/05 01:25:04 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	ft_main3(t_list *list, t_args *arg)
 int	ft_main2(t_args *arg)
 {
 	t_list	*list;
-
 
 	list = NULL;
 	ft_ph_init(&list, arg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_manage.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:03:33 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/04 19:25:03 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/05 01:24:29 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,6 @@ t_list	*ft_lstnew(t_args *arg, int i)
 	if (!new->arg)
 		return (NULL);
 	new->arg = arg;
-
-	// new->arg->must_eat = arg->must_eat;
-	// new->arg->nbr_philo = arg->nbr_philo;
-	// new->arg->start_time = arg->start_time;
-	// new->arg->time_die = arg->time_die;
-	// new->arg->time_eat = arg->time_eat;
-	// new->arg->time_sleep = arg->time_sleep;
-	// new->arg->ph = arg->ph;
-
 	new->id_ph = i + 1;
 	new->eat = arg->must_eat;
 	new->die = get_time();
