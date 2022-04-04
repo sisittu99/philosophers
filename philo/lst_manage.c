@@ -6,11 +6,31 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:03:33 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/03 12:12:14 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/04 15:10:12 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	ft_ph_init(t_list **list, t_args *arg)
+{
+	int		i;
+	t_list	*new;
+	t_list	*tmp;
+
+	i = -1;
+	while (++i < arg->nbr_philo)
+	{
+		new = ft_lstnew(arg, i);
+		ft_lstadd_back(list, new);
+	}
+	tmp = (*list);
+	while ((*list)->next != NULL)
+		*list = (*list)->next;
+	(*list)->next = tmp;
+	*list = (*list)->next;
+	return (0);
+}
 
 t_list	*ft_lstnew(t_args *arg, int i)
 {

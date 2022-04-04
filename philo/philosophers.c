@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
+/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/04 12:58:29 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/04 15:02:38 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	define_args(int argc, char **argv, t_args *arg)
-{
-	(void)argc;
-	arg->nbr_philo = ft_atoi(argv[1]);
-	arg->time_die = ft_atoi(argv[2]);
-	arg->time_eat = ft_atoi(argv[3]);
-	arg->time_sleep = ft_atoi(argv[4]);
-	arg->start_time = get_time();
-	if (argc == 6)
-		arg->must_eat = ft_atoi(argv[5]);
-	else
-		arg->must_eat = 0;
-}
-
-void	write_sms(t_list *list, char *str)
-{
-	pthread_mutex_lock(&list->mutex_write);
-	printf("%d ms %d %s\n", get_time() - list->arg->start_time,
-		list->id_ph, str);
-	if (str[0] != 'D')
-		pthread_mutex_unlock(&list->mutex_write);
-}
 
 void	*routine(void *list)
 {
@@ -88,26 +65,7 @@ void	*routine(void *list)
 		}
 			write_sms((t_list *)list, "is thinking");
 	}
-	return (0);
-}
-
-int	ft_ph_init(t_list **list, t_args *arg)
-{
-	int		i;
-	t_list	*new;
-	t_list	*tmp;
-
-	i = -1;
-	while (++i < arg->nbr_philo)
-	{
-		new = ft_lstnew(arg, i);
-		ft_lstadd_back(list, new);
-	}
-	tmp = (*list);
-	while ((*list)->next != NULL)
-		*list = (*list)->next;
-	(*list)->next = tmp;
-	*list = (*list)->next;
+	printf("PH : %d exit\n", ((t_list *)list)->id_ph);
 	return (0);
 }
 
@@ -122,7 +80,7 @@ int	ft_main2(t_args *arg)
 	i = 0;
 	pthread_mutex_init(&list->mutex, NULL);
 	// pthread_mutex_init(&list->mutex_eat, NULL);
-	pthread_mutex_init(&list->mutex_write, NULL);
+	pthread_mutex_init(&list->arg->mutex_write, NULL);
 	while (i < arg->nbr_philo)
 	{
 		if (pthread_create(&arg->ph[i], NULL, routine, list) != 0)
@@ -136,14 +94,14 @@ int	ft_main2(t_args *arg)
 	while (++i < arg->nbr_philo)
 	{
 		if (pthread_join(arg->ph[i], (void *)&r) != 0)
-			return (printf("Error: didn't join\n"));
+			return (printf("Error: %d didn't join\n", i + 1));
 		if (r == 1)
 			return (1);
 	}
 
 	pthread_mutex_destroy(&list->mutex);
 	// pthread_mutex_destroy(&list->mutex_eat);
-	pthread_mutex_destroy(&list->mutex_write);
+	pthread_mutex_destroy(&list->arg->mutex_write);
 	ft_lst_delete(&list);
 	return (0);
 }
@@ -157,7 +115,8 @@ int	main(int argc, char **argv)
 		write(2, "Invalid arguments. Exit", 24);
 		return (1);
 	}
-	define_args(argc, argv, &arg);
+	if (define_args(argc, argv, &arg) != 0)
+		return (1);
 	arg.ph = (pthread_t *)malloc(sizeof(pthread_t) * arg.nbr_philo);
 	if (!arg.ph)
 		return (1);
