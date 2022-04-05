@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/05 01:25:04 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/05 14:08:20 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,14 @@ int	ft_main2(t_args *arg)
 		return (1);
 	pthread_mutex_destroy(&list->mutex);
 	pthread_mutex_destroy(&list->arg->mutex_write);
-	// ft_lst_delete(&list);
+	ft_lst_delete(&list);
 	return (0);
 }
+
+//things to free:	1) arg.ph
+//					2) every list node
+//					3) every arg node inside list
+
 
 int	main(int argc, char **argv)
 {

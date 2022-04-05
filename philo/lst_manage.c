@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:03:33 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/05 01:24:29 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/05 14:00:06 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ t_list	*ft_lstnew(t_args *arg, int i)
 	new = (t_list *) malloc (sizeof(t_list));
 	if (new == NULL)
 		return (NULL);
-	new->arg = (t_args *) malloc (sizeof(t_args) * 1);
-	if (!new->arg)
-		return (NULL);
+	// new->arg = (t_args *) malloc (sizeof(t_args) * 1);
+	// if (!new->arg)
+	// 	return (NULL);
 	new->arg = arg;
 	new->id_ph = i + 1;
 	new->eat = arg->must_eat;
@@ -83,12 +83,13 @@ void	ft_lst_delete(t_list **list)
 	if (*list == NULL)
 		return ;
 	tmp = *list;
+	free(tmp->arg->ph);
 	i = (*list)->arg->nbr_philo;
+	// 	free((tmp)->arg);
 	while (i--)
 	{
-		tmp = (*list)->next;
-		free((*list)->arg);
-		free(*list);
-		*list = tmp;
+		*list = (tmp)->next;
+		free(tmp);
+		tmp = *list;
 	}
 }
