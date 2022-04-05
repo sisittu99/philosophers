@@ -6,11 +6,38 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/05 15:46:596 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/05 16:45:39 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	ft_pthread_create(pthread_t *ph, t_list *list, t_args *arg, int *r)
+{
+	int	i;
+
+	i = 0;
+	while (i < (arg)->nbr_philo)
+	{
+		if (pthread_create(&ph[i], NULL, routine, list) != 0)
+		{
+			printf("Error: didn't create\n");
+			return (-1);
+		}
+		if (i != arg->nbr_philo - 1)
+			list = list->next;
+		i++;
+	}
+	while (i--)
+	{
+		if (pthread_join(ph[i], (void *)&(r[i])) != 0)
+		{
+			printf("Error: %d didn't join\n", i + 1);
+			return (-1);
+		}
+	}
+	return (i);
+}
 
 int	ft_main3(t_list *list, t_args *arg)
 {
@@ -19,23 +46,12 @@ int	ft_main3(t_list *list, t_args *arg)
 	pthread_t	*ph;
 
 	ph = (pthread_t *)malloc(sizeof(pthread_t) * arg->nbr_philo);
-	if (!ph)
+	r = (int *) malloc (sizeof(int) * arg->nbr_philo);
+	if (!ph || !r)
 		return (1);
-	i = 0;
-	while (i < arg->nbr_philo)
-	{
-		if (pthread_create(&ph[i], NULL, routine, list) != 0)
-			return (printf("Error: didn't create\n"));
-		if (i != arg->nbr_philo - 1)
-			list = list->next;
-		i++;
-	}
-	r = (int *) malloc (sizeof(int) * i);
-	if (!r)
+	i = ft_pthread_create(ph, list, arg, r);
+	if (i == -1)
 		return (1);
-	while (i--)
-		if (pthread_join(ph[i], (void *)&(r[i])) != 0)
-			return (printf("Error: %d didn't join\n", i + 1));
 	i = 0;
 	while (i < arg->nbr_philo)
 	{
@@ -70,11 +86,6 @@ int	ft_main2(t_args *arg)
 		return (1);
 	return (0);
 }
-
-//things to free:	1) arg.ph
-//					2) every list node
-//					3) every arg node inside list
-
 
 int	main(int argc, char **argv)
 {

@@ -16,7 +16,7 @@ SRC			=	philosophers.c philo_utils.c lst_manage.c time.c routine.c\
 
 OBJ			=	$(SRC:.c=.o)
 
-CC			=	gcc -pthread #-fsanitize=address
+CC			=	gcc -pthread
 
 RM			=	rm -f
 

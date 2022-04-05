@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:03:33 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/05 15:30:52 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/05 16:34:11 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ void	ft_lst_delete(t_list **list)
 	if (*list == NULL)
 		return ;
 	tmp = *list;
-	//free(tmp->arg->ph);
 	i = (*list)->arg->nbr_philo;
-	// 	free((tmp)->arg);
 	while (i--)
 	{
 		*list = (tmp)->next;
