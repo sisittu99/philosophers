@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -29,7 +30,6 @@ typedef struct s_args
 	int				time_eat;
 	int				time_sleep;
 	int				must_eat;
-	pthread_t		*ph;
 	int				start_time;
 	pthread_mutex_t	mutex_write;
 }				t_args;
