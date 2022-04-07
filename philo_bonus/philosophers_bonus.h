@@ -23,19 +23,26 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+
 
 // * STRUCT DATA * //
 
 typedef struct s_args
 {
-	int	*pid;
-	int	nbr_philo;
-	int	time_die;
-	int	time_eat;
-	int	time_sleep;
-	int	must_eat;
-	int	start_time;
-	sem_t	*sem;
+	int		*pid;
+	int		id_ph;
+	int		nbr_philo;
+	int		time_die;
+	int		time_eat;
+	int		time_sleep;
+	int		must_eat;
+	int		start_time;
+	int		time_left;
+	sem_t	*sem_die;
+	sem_t	*sem_write;
+	sem_t	*sem_fork;
+	// sem_t	*sem_meal;
 }				t_args;
 
 // * UTILS * //
