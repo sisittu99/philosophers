@@ -20,25 +20,6 @@ void	write_sms(t_args *arg, char *str)
 	sem_post(arg->sem_write);
 }
 
-void	ft_check_dead(t_args *arg)
-{
-	if (get_time() - arg->time_left >= arg->time_die)
-	{
-		write_sms(arg, "DIED");
-		sem_post(arg->sem_die);
-		sem_wait(arg->sem_write);
-		exit(1);
-	}
-}
-
-void	ft_meal_check(t_args *arg, int *meal)
-{
-	if (*meal == arg->must_eat)
-		exit (0);
-	else if (*meal < arg->must_eat)
-		*meal += 1;
-}
-
 int	define_args(int argc, char **argv, t_args *arg)
 {
 	arg->id_ph = 0;
@@ -55,10 +36,7 @@ int	define_args(int argc, char **argv, t_args *arg)
 	if (arg->nbr_philo <= 0 || arg->time_die <= 0 || arg->time_eat <= 0
 		|| arg->time_sleep <= 0 || arg->must_eat < -1
 		|| arg->time_eat >= arg->time_die)
-	{
-		printf("Invalid arguments. Exit\n");
-		exit(1);
-	}
+		exit(write(2, "Invalid arguments. Exit", 24));
 	sem_unlink("sem_die");
 	sem_unlink("sem_fork");
 	sem_unlink("sem_write");
@@ -67,54 +45,6 @@ int	define_args(int argc, char **argv, t_args *arg)
 	arg->sem_write = sem_open("sem_write", O_CREAT, 0644, 1);
 	ft_process_init(arg);
 	return (0);
-}
-
-void	ft_child_set(t_args *arg)
-{
-	int	meal;
-
-	meal = 0;
-	while (1)
-	{
-		ft_check_dead(arg);
-		sem_wait(arg->sem_fork);
-		write_sms(arg, "is taking the left fork");
-		sem_wait(arg->sem_fork);
-		write_sms(arg, "is taking the right fork");
-		arg->time_left = get_time();
-		write_sms(arg, "is eating");
-		ft_usleep(arg->time_eat);
-		sem_post(arg->sem_fork);
-		sem_post(arg->sem_fork);
-		ft_meal_check(arg, &meal);
-		write_sms(arg, "is sleeping");
-		ft_usleep(arg->time_sleep);
-		ft_check_dead(arg);
-		write_sms(arg, "is thinking");
-	}
-}
-
-void	ft_process_init(t_args *arg)
-{
-	int		i;
-
-	i = -1;
-	arg->pid = (int *) malloc (sizeof(int) * arg->nbr_philo);
-	if (!arg->pid)
-		exit(1);
-	while (i < arg->nbr_philo - 1)
-	{
-		if (i < 0 || arg->pid[i - 1] != 0)
-		{
-			arg->pid[i] = fork();
-			if (arg->pid[i] == 0)
-			{
-				arg->id_ph = i + 2;
-				ft_child_set(arg);
-			}
-		}
-		i++;
-	}
 }
 
 int	ft_isdigit(int c)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers_bonus.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
+/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:33:27 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/06 18:333:55 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/07 18:24:43 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 
-
 // * STRUCT DATA * //
 
 typedef struct s_args
@@ -42,11 +41,11 @@ typedef struct s_args
 	sem_t	*sem_die;
 	sem_t	*sem_write;
 	sem_t	*sem_fork;
-	// sem_t	*sem_meal;
 }				t_args;
 
 // * UTILS * //
 
+void	write_sms(t_args *arg, char *str);
 int		define_args(int argc, char **argv, t_args *arg);
 void	ft_process_init(t_args *arg);
 int		ft_atoi(const char *str);

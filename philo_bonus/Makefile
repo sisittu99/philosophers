@@ -13,10 +13,11 @@
 NAME		=	philo
 
 SRC			=	philosophers_bonus.c philo_utils_bonus.c time_bonus.c\
+				philo_child.c\
 
 OBJ			=	$(SRC:.c=.o)
 
-CC			=	gcc -pthread
+CC			=	gcc -pthread -fsanitize=address
 
 RM			=	rm -f
 
