@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:33:27 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/07 18:24:43 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/09 17:48:53 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,24 @@ typedef struct s_args
 	sem_t	*sem_fork;
 }				t_args;
 
+// * PROCESSES UTILS * //
+
+void	ft_kill_child(t_args *arg);
+void	ft_sem_close(t_args *arg, int def);
+void	ft_check_dead(t_args *arg);
+void	ft_meal_check(t_args *arg, int *meal);
+void	ft_child_set(t_args *arg);
+
 // * UTILS * //
 
-void	write_sms(t_args *arg, char *str);
-int		define_args(int argc, char **argv, t_args *arg);
+void	ft_write_sms(t_args *arg, char *str);
+int		ft_define_args(int argc, char **argv, t_args *arg);
 void	ft_process_init(t_args *arg);
 int		ft_atoi(const char *str);
 
 // * TIME UTILS * //
 
-int		get_time(void);
+int		ft_get_time(void);
 void	ft_usleep(long int time_in_ms);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/05 16:45:39 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/09 17:51:15 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_pthread_create(pthread_t *ph, t_list *list, t_args *arg, int *r)
 	i = 0;
 	while (i < (arg)->nbr_philo)
 	{
-		if (pthread_create(&ph[i], NULL, routine, list) != 0)
+		if (pthread_create(&ph[i], NULL, ft_routine, list) != 0)
 		{
 			printf("Error: didn't create\n");
 			return (-1);
@@ -96,7 +96,7 @@ int	main(int argc, char **argv)
 		write(2, "Invalid arguments. Exit", 24);
 		return (1);
 	}
-	if (define_args(argc, argv, &arg) != 0)
+	if (ft_define_args(argc, argv, &arg) != 0)
 		return (1);
 	if (ft_main2(&arg) != 0)
 		return (1);

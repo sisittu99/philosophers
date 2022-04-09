@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 16:33:16 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/05 16:35:15 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/09 17:51:03 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ typedef struct s_list
 
 // * ROUTINE * //
 
-void	*routine(void *list);
-void	write_sms(t_list *list, char *str);
+void	*ft_routine(void *list);
+void	ft_write_sms(t_list *list, char *str);
 
 // * UTILS * //
 
-int		define_args(int argc, char **argv, t_args *arg);
+int		ft_define_args(int argc, char **argv, t_args *arg);
 int		ft_atoi(const char *str);
 
 // * LIST UTILS *//
@@ -66,7 +66,7 @@ void	ft_lst_delete(t_list **list);
 
 // * TIME * //
 
-int		get_time(void);
+int		ft_get_time(void);
 void	ft_usleep(long int time_in_ms);
 
 #endif

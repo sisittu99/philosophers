@@ -6,18 +6,19 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:30:18 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/07 18:29:56 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/09 17:41:23 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-void	ft_sem_close(t_args *arg)
+void	ft_sem_close(t_args *arg, int def)
 {
 	sem_close(arg->sem_die);
 	sem_close(arg->sem_fork);
 	sem_close(arg->sem_write);
-	free(arg->pid);
+	if (def == 1)
+		free(arg->pid);
 }
 
 void	ft_kill_child(t_args *arg)
@@ -30,7 +31,7 @@ void	ft_kill_child(t_args *arg)
 		kill(arg->pid[i], SIGKILL);
 		i++;
 	}
-	ft_sem_close(arg);
+	ft_sem_close(arg, -1);
 }
 
 int	main(int argc, char **argv)
@@ -43,7 +44,7 @@ int	main(int argc, char **argv)
 	stat = 0;
 	if (argc != 6 && argc != 5)
 		exit(write(2, "Invalid arguments. Exit", 24));
-	define_args(argc, argv, &arg);
+	ft_define_args(argc, argv, &arg);
 	while (i++ < arg.nbr_philo && arg.must_eat > 0)
 	{
 		waitpid(-1, &stat, 0);
@@ -58,6 +59,6 @@ int	main(int argc, char **argv)
 		sem_wait(arg.sem_die);
 		ft_kill_child(&arg);
 	}
-	ft_sem_close(&arg);
+	ft_sem_close(&arg, 1);
 	return (0);
 }

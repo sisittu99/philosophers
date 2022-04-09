@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:16:04 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/07 18:36:09 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/09 17:43:16 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	ft_check_dead(t_args *arg)
 {
-	if (get_time() - arg->time_left >= arg->time_die)
+	if (ft_get_time() - arg->time_left >= arg->time_die)
 	{
-		write_sms(arg, "DIED");
+		ft_write_sms(arg, "DIED");
 		sem_post(arg->sem_die);
 		sem_wait(arg->sem_write);
-		// free(arg->pid);
+		free(arg->pid);
 		exit(1);
 	}
 }
@@ -28,7 +28,7 @@ void	ft_meal_check(t_args *arg, int *meal)
 {
 	if (*meal == arg->must_eat)
 	{
-		// free(arg->pid);
+		free(arg->pid);
 		exit (0);
 	}
 	else if (*meal < arg->must_eat)
@@ -44,19 +44,19 @@ void	ft_child_set(t_args *arg)
 	{
 		ft_check_dead(arg);
 		sem_wait(arg->sem_fork);
-		write_sms(arg, "is taking the left fork");
+		ft_write_sms(arg, "is taking the left fork");
 		sem_wait(arg->sem_fork);
-		write_sms(arg, "is taking the right fork");
-		arg->time_left = get_time();
-		write_sms(arg, "is eating");
+		ft_write_sms(arg, "is taking the right fork");
+		arg->time_left = ft_get_time();
+		ft_write_sms(arg, "is eating");
 		ft_usleep(arg->time_eat);
 		sem_post(arg->sem_fork);
 		sem_post(arg->sem_fork);
 		ft_meal_check(arg, &meal);
-		write_sms(arg, "is sleeping");
+		ft_write_sms(arg, "is sleeping");
 		ft_usleep(arg->time_sleep);
 		ft_check_dead(arg);
-		write_sms(arg, "is thinking");
+		ft_write_sms(arg, "is thinking");
 	}
 }
 
@@ -64,19 +64,18 @@ void	ft_process_init(t_args *arg)
 {
 	int		i;
 
-	i = -1;
+	i = 0;
 	arg->pid = (int *) malloc (sizeof(int) * arg->nbr_philo);
 	if (!arg->pid)
 		exit(1);
-	while (i < arg->nbr_philo - 1)
+	while (i < arg->nbr_philo)
 	{
-		if (i < 0 || arg->pid[i - 1] != 0)
+		if (i == 0 || arg->pid[i - 1] != 0)
 		{
 			arg->pid[i] = fork();
 			if (arg->pid[i] == 0)
 			{
-				arg->id_ph = i + 2;
-				free(arg->pid);
+				arg->id_ph = i + 1;
 				ft_child_set(arg);
 			}
 		}

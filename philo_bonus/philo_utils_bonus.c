@@ -12,22 +12,22 @@
 
 #include "philosophers_bonus.h"
 
-void	write_sms(t_args *arg, char *str)
+void	ft_write_sms(t_args *arg, char *str)
 {
 	sem_wait(arg->sem_write);
-	printf("%d ms %d %s\n", get_time() - arg->start_time,
+	printf("%d ms %d %s\n", ft_get_time() - arg->start_time,
 		arg->id_ph, str);
 	sem_post(arg->sem_write);
 }
 
-int	define_args(int argc, char **argv, t_args *arg)
+int	ft_define_args(int argc, char **argv, t_args *arg)
 {
 	arg->id_ph = 0;
 	arg->nbr_philo = ft_atoi(argv[1]);
 	arg->time_die = ft_atoi(argv[2]);
 	arg->time_eat = ft_atoi(argv[3]);
 	arg->time_sleep = ft_atoi(argv[4]);
-	arg->start_time = get_time();
+	arg->start_time = ft_get_time();
 	arg->time_left = arg->start_time;
 	if (argc == 6)
 		arg->must_eat = ft_atoi(argv[5]);
