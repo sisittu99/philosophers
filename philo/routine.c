@@ -58,7 +58,10 @@ void	*ft_routine(void *list)
 		i = 0;
 		if (ft_get_time() - ((t_list *)list)->die
 			>= ((t_list *)list)->arg->time_die)
+		{
+			printf("Morte in Routine\n");
 			return (ft_philo_is_dying(list));
+		}
 		pthread_mutex_lock(&((t_list *)list)->mutex);
 		pthread_mutex_lock(&(*tmp)->mutex);
 		if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1)
