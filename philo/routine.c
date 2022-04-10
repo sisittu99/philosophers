@@ -58,11 +58,15 @@ void	*ft_routine(void *list)
 		i = 0;
 		if (ft_get_time() - ((t_list *)list)->die
 			>= ((t_list *)list)->arg->time_die)
-		{
-			printf("Morte in Routine\n");
 			return (ft_philo_is_dying(list));
-		}
 		pthread_mutex_lock(&((t_list *)list)->mutex);
+		if (((t_list *)list)->arg->nbr_philo == 1)
+		{
+			ft_write_sms((t_list *)list, "is taking the left fork");
+			ft_usleep(list, ((t_list *)list)->arg->time_die);
+			ft_philo_is_dying(list);
+			return (0);
+		}
 		pthread_mutex_lock(&(*tmp)->mutex);
 		if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1)
 			ft_philo_is_eating(list, tmp, &i);
