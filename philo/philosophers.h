@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 16:33:16 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/10 13:06:20 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/10 16:47:17 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_args
 	int				must_eat;
 	int				start_time;
 	pthread_mutex_t	mutex_write;
+	pthread_mutex_t	mutex_die;
 }				t_args;
 
 // * LIST * //
@@ -48,7 +49,7 @@ typedef struct s_list
 
 // * ROUTINE * //
 
-void	*ft_philo_is_dying(void *list, t_list **tmp);
+void	*ft_philo_is_dying(void *list);
 void	*ft_routine(void *list);
 void	ft_write_sms(t_list *list, char *str);
 
@@ -68,5 +69,5 @@ void	ft_lst_delete(t_list **list);
 // * TIME * //
 
 int		ft_get_time(void);
-int		ft_usleep(void *list);
+int		ft_usleep(void *list, int sleep);
 #endif

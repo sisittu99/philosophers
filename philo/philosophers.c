@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/09 17:51:15 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/10 16:48:01 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,11 @@ int	ft_main2(t_args *arg)
 	ft_ph_init(&list, arg);
 	pthread_mutex_init(&list->mutex, NULL);
 	pthread_mutex_init(&list->arg->mutex_write, NULL);
+	pthread_mutex_init(&list->arg->mutex_die, NULL);
 	i = ft_main3(list, arg);
 	pthread_mutex_destroy(&list->mutex);
 	pthread_mutex_destroy(&list->arg->mutex_write);
+	pthread_mutex_destroy(&list->arg->mutex_die);
 	ft_lst_delete(&list);
 	if (i != 0)
 		return (1);
