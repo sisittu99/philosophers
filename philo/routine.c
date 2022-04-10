@@ -72,10 +72,7 @@ void	*ft_routine(void *list)
 		else if (((t_list *)list)->eat - 1 == 0 && i == 1)
 			return (0);
 		if (ft_sleep_and_think(list, i) == 1)
-		{
-			printf("ehila\n");
 			return (0);
-		}
 	}
 	return (0);
 }

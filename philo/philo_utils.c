@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:27:31 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/10 12:28:37 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/10 15:34:36 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,11 @@ int	ft_atoi(const char *str)
 		return (-1);
 	while (*str)
 	{
-		if (!ft_isdigit(*str))
+		if (!ft_isdigit(*str) || (j == 10 && y > 214748364))
 			return (-1);
 		y = (y * 10) + ((*str - 48) % 10);
 		str++;
 		j++;
 	}
-	if (j >= 11)
-		return (-1);
 	return (y);
 }

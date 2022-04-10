@@ -34,8 +34,7 @@ int	ft_define_args(int argc, char **argv, t_args *arg)
 	else
 		arg->must_eat = -1;
 	if (arg->nbr_philo <= 0 || arg->time_die <= 0 || arg->time_eat <= 0
-		|| arg->time_sleep <= 0 || arg->must_eat < -1
-		|| arg->time_eat >= arg->time_die)
+		|| arg->time_sleep <= 0 || arg->must_eat < -1)
 		exit(write(2, "Invalid arguments. Exit", 24));
 	sem_unlink("sem_die");
 	sem_unlink("sem_fork");
@@ -67,13 +66,11 @@ int	ft_atoi(const char *str)
 		return (-1);
 	while (*str)
 	{
-		if (!ft_isdigit(*str))
+		if (!ft_isdigit(*str) || (j == 10 && y > 214748364))
 			return (-1);
 		y = (y * 10) + ((*str - 48) % 10);
 		str++;
 		j++;
 	}
-	if (j >= 10)
-		return (-1);
 	return (y);
 }
