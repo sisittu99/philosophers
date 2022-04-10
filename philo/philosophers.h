@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 16:33:16 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/09 17:51:03 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/10 13:06:20 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_list
 
 // * ROUTINE * //
 
+void	*ft_philo_is_dying(void *list, t_list **tmp);
 void	*ft_routine(void *list);
 void	ft_write_sms(t_list *list, char *str);
 
@@ -67,6 +68,5 @@ void	ft_lst_delete(t_list **list);
 // * TIME * //
 
 int		ft_get_time(void);
-void	ft_usleep(long int time_in_ms);
-
+int		ft_usleep(void *list);
 #endif

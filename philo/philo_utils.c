@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:27:31 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/09 17:53:55 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/10 12:28:37 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int	ft_define_args(int argc, char **argv, t_args *arg)
 	else
 		arg->must_eat = 0;
 	if (arg->nbr_philo <= 0 || arg->time_die <= 0 || arg->time_eat <= 0
-		|| arg->time_sleep <= 0 || arg->must_eat < 0
-		|| arg->time_eat <= arg->time_die)
+		|| arg->time_sleep <= 0 || arg->must_eat < 0)
 		return (printf("Invalid arguments. Exit\n"));
 	return (0);
 }
@@ -70,7 +69,7 @@ int	ft_atoi(const char *str)
 		str++;
 		j++;
 	}
-	if (j >= 10)
+	if (j >= 11)
 		return (-1);
 	return (y);
 }

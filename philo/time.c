@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:12:57 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/09 17:43:06 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/10 13:33:16 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@ int	ft_get_time(void)
 	return ((tm.tv_sec * (u_int64_t)1000) + (tm.tv_usec / 1000));
 }
 
-void	ft_usleep(long int time_in_ms)
+int	ft_usleep(void *list)
 {
 	long int	start_time;
 
-	start_time = 0;
 	start_time = ft_get_time();
-	while ((ft_get_time() - start_time) < time_in_ms)
+	while ((ft_get_time() - start_time) < ((t_list *)list)->arg->time_sleep)
 	{
-		usleep(time_in_ms / 10);
+		if ((ft_get_time() - start_time) >= ((t_list *)list)->arg->time_die)
+			return ((int) ft_philo_is_dying(list, &((t_list *)list)->next));
+		usleep(((t_list *)list)->arg->time_sleep / 10);
 	}
+	return (1);
 }
+
+//il problema di fondo potrebbe essere che i filosofi debbano controllare anche mentre dormono che nessuno sia morto, o puó diventare una tragedia. Ma come fare?
