@@ -47,6 +47,14 @@ int	ft_sleep_and_think(void *list, int i)
 	return (0);
 }
 
+void	*ft_lonely_philo(void *list)
+{
+	ft_write_sms((t_list *)list, "is taking the left fork");
+	ft_usleep(list, ((t_list *)list)->arg->time_die);
+	pthread_mutex_unlock(&((t_list *)list)->mutex);
+	return (ft_philo_is_dying(list));
+}
+
 void	*ft_routine(void *list)
 {
 	t_list	**tmp;
@@ -61,12 +69,7 @@ void	*ft_routine(void *list)
 			return (ft_philo_is_dying(list));
 		pthread_mutex_lock(&((t_list *)list)->mutex);
 		if (((t_list *)list)->arg->nbr_philo == 1)
-		{
-			ft_write_sms((t_list *)list, "is taking the left fork");
-			ft_usleep(list, ((t_list *)list)->arg->time_die);
-			ft_philo_is_dying(list);
-			return (0);
-		}
+			return (ft_lonely_philo(list));
 		pthread_mutex_lock(&(*tmp)->mutex);
 		if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1)
 			ft_philo_is_eating(list, tmp, &i);
