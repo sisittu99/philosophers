@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:33:27 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/09 17:48:53 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/11 17:37:12 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ int		ft_atoi(const char *str);
 // * TIME UTILS * //
 
 int		ft_get_time(void);
-void	ft_usleep(long int time_in_ms);
+void	ft_usleep(t_args *arg, int sleep);
 
 #endif

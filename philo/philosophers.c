@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
+/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/10 16:48:01 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/11 16:52:30 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,15 @@ int	ft_pthread_create(pthread_t *ph, t_list *list, t_args *arg, int *r)
 			list = list->next;
 		i++;
 	}
-	while (i--)
+	i = 0;
+	while (i < (arg)->nbr_philo)
 	{
 		if (pthread_join(ph[i], (void *)&(r[i])) != 0)
 		{
 			printf("Error: %d didn't join\n", i + 1);
 			return (-1);
 		}
+		i++;
 	}
 	return (i);
 }

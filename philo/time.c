@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
+/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:12:57 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/11 12:41:12 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/11 16:27:49 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_usleep(void *list, int sleep)
 	{
 		if ((ft_get_time() - ((t_list *)list)->die)
 			>= ((t_list *)list)->arg->time_die)
-			return (*((int *) ft_philo_is_dying(list))); // forzatura per castare da void* a int
+			ft_philo_is_dying(list);
 		if (((t_list *)list)->arg->must_eat == -1)
 			return (0);
 		usleep((sleep % 100) + 1);

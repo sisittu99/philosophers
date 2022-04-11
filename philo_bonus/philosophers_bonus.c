@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:30:18 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/09 17:41:23 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/11 18:29:35 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,21 @@ int	main(int argc, char **argv)
 	if (argc != 6 && argc != 5)
 		exit(write(2, "Invalid arguments. Exit", 24));
 	ft_define_args(argc, argv, &arg);
-	while (i++ < arg.nbr_philo && arg.must_eat > 0)
+	while (i < arg.nbr_philo)
 	{
-		waitpid(-1, &stat, 0);
-		if (!(WIFEXITED(stat)))
+		if (arg.must_eat > 0)
 		{
-			ft_kill_child(&arg);
-			return (0);
+			printf("EXIT\n");								//SISTEMARE PER CASO 5 500 200 200
+			waitpid(-1, &stat, 0);							//NON ESCE QUANDO DOVREBBE
+			printf("EXIT 1\n");								//SE SI TOGLIE IL WHILE FUNZIONA MA
+			if (!(WIFEXITED(stat)))							//POI ERRORE SU USCITA CORRETTA IN 5 800 200 200 7
+			{
+				printf("EXIT 2\n");
+				ft_kill_child(&arg);
+				return (0);
+			}
 		}
+		i++;
 	}
 	if (arg.must_eat <= 0)
 	{

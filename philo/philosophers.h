@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
+/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 16:33:16 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/10 17:22:01 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/11 16:17:37 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 // * STRUCT DATA * //
 
-typedef struct s_args
+	typedef struct s_args
 {
 	int				nbr_philo;
 	int				time_die;
