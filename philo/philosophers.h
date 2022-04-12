@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 16:33:16 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/11 16:17:37 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/12 18:50:49 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 // * STRUCT DATA * //
 
-	typedef struct s_args
+typedef struct s_args
 {
 	int				nbr_philo;
 	int				time_die;
@@ -52,6 +52,11 @@ typedef struct s_list
 void	*ft_philo_is_dying(void *list);
 void	*ft_routine(void *list);
 void	ft_write_sms(t_list *list, char *str);
+
+// * ROUTINE UTILS * //
+
+void	*ft_lonely_philo(void *list);
+void	ft_check_id(void *list, t_list **tmp);
 
 // * UTILS * //
 

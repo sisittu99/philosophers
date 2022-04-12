@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:16:04 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/11 17:51:48 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/12 18:35:14 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_check_dead(t_args *arg)
 		sem_post(arg->sem_die);
 		sem_wait(arg->sem_write);
 		free(arg->pid);
-		exit(1);
+		exit (1);
 	}
 }
 
@@ -43,8 +43,13 @@ void	ft_child_set(t_args *arg)
 	while (1)
 	{
 		ft_check_dead(arg);
+		if (arg->id_ph == arg->nbr_philo)
+			sem_wait(arg->sem_odd);
 		sem_wait(arg->sem_fork);
 		ft_write_sms(arg, "is taking the left fork");
+		sem_post(arg->sem_odd);
+		if ((ft_get_time() - arg->time_left) + arg->time_eat >= arg->time_die)
+			ft_usleep(arg, (ft_get_time() - arg->time_left) + arg->time_eat + 1);
 		sem_wait(arg->sem_fork);
 		ft_check_dead(arg);
 		ft_write_sms(arg, "is taking the right fork");

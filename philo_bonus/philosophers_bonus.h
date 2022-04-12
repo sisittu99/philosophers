@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:33:27 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/11 17:37:12 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/12 18:02:11 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ typedef struct s_args
 	sem_t	*sem_die;
 	sem_t	*sem_write;
 	sem_t	*sem_fork;
+	sem_t	*sem_odd;
 }				t_args;
 
 // * PROCESSES UTILS * //
 
-void	ft_kill_child(t_args *arg);
+void	ft_kill_child(t_args *arg, int def);
 void	ft_sem_close(t_args *arg, int def);
 void	ft_check_dead(t_args *arg);
 void	ft_meal_check(t_args *arg, int *meal);

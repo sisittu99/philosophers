@@ -39,7 +39,9 @@ int	ft_define_args(int argc, char **argv, t_args *arg)
 	sem_unlink("sem_die");
 	sem_unlink("sem_fork");
 	sem_unlink("sem_write");
+	sem_unlink("sem_odd");
 	arg->sem_die = sem_open("sem_die", O_CREAT, 0644, 0);
+	arg->sem_odd = sem_open("sem_odd", O_CREAT, 0644, arg->nbr_philo - 1);
 	arg->sem_fork = sem_open("sem_fork", O_CREAT, 0644, arg->nbr_philo);
 	arg->sem_write = sem_open("sem_write", O_CREAT, 0644, 1);
 	ft_process_init(arg);

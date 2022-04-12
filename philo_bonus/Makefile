@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	philo
+NAME		=	philo_bonus
 
 SRC			=	philosophers_bonus.c philo_utils_bonus.c time_bonus.c\
 				philo_child.c\

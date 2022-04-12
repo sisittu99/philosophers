@@ -13,6 +13,7 @@
 NAME		=	philo
 
 SRC			=	philosophers.c philo_utils.c lst_manage.c time.c routine.c\
+				routine_utils.c\
 
 OBJ			=	$(SRC:.c=.o)
 
