@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_child.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:16:04 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/12 18:35:14 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/12 20:06:13 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_check_dead(t_args *arg)
 
 void	ft_meal_check(t_args *arg, int *meal)
 {
-	if (*meal == arg->must_eat)
+	if (*meal == arg->must_eat - 1)
 	{
 		free(arg->pid);
 		exit (0);
@@ -43,13 +43,18 @@ void	ft_child_set(t_args *arg)
 	while (1)
 	{
 		ft_check_dead(arg);
-		if (arg->id_ph == arg->nbr_philo)
+		if (arg->id_ph == arg->nbr_philo && arg->nbr_philo != 1)
 			sem_wait(arg->sem_odd);
 		sem_wait(arg->sem_fork);
 		ft_write_sms(arg, "is taking the left fork");
 		sem_post(arg->sem_odd);
+// !!!!!!!!!
 		if ((ft_get_time() - arg->time_left) + arg->time_eat >= arg->time_die)
-			ft_usleep(arg, (ft_get_time() - arg->time_left) + arg->time_eat + 1);
+			ft_usleep(arg,
+				(ft_get_time() - arg->time_left) + arg->time_eat + 1);
+// Problema con 4 410 200 200: blocca perché non sa che possono salvarsi
+		if (arg->nbr_philo == 1)
+			ft_usleep(arg, arg->time_die + 1);
 		sem_wait(arg->sem_fork);
 		ft_check_dead(arg);
 		ft_write_sms(arg, "is taking the right fork");
