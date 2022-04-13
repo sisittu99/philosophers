@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers_bonus.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
+/*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:33:27 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/13 12:34:02 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/13 19:36:38 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_args
 void	ft_kill_child(t_args *arg, int def);
 void	ft_sem_close(t_args *arg, int def);
 void	ft_check_dead(t_args *arg);
-void	ft_meal_check(t_args *arg, int *meal);
+void	ft_meal_check(t_args *arg);
 void	ft_child_set(t_args *arg);
 
 // * UTILS * //

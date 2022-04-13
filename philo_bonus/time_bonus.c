@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:12:57 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/11 17:37:04 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/13 18:29:31 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,3 @@ void	ft_usleep(t_args *arg, int sleep)
 		usleep((sleep % 100) + 1);
 	}
 }
-
-
-// void	ft_usleep(long int time_in_ms)
-// {
-// 	long int	start_time;
-
-// 	start_time = 0;
-// 	start_time = ft_get_time();
-// 	while ((ft_get_time() - start_time) < time_in_ms)
-// 	{
-// 		usleep(time_in_ms / 10);
-// 	}
-// }

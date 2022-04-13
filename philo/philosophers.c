@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:24:20 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/11 16:52:30 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/13 18:17:07 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,22 @@ int	ft_main2(t_args *arg)
 {
 	t_list	*list;
 	int		i;
+	int		index;
 
 	i = 0;
+	index = 0;
 	list = NULL;
 	ft_ph_init(&list, arg);
 	pthread_mutex_init(&list->mutex, NULL);
 	pthread_mutex_init(&list->arg->mutex_write, NULL);
 	pthread_mutex_init(&list->arg->mutex_die, NULL);
 	i = ft_main3(list, arg);
-	pthread_mutex_destroy(&list->mutex);
+	while (index < list->arg->nbr_philo)
+	{
+		pthread_mutex_destroy(&list->mutex);
+		list = list->next;
+		index++;
+	}
 	pthread_mutex_destroy(&list->arg->mutex_write);
 	pthread_mutex_destroy(&list->arg->mutex_die);
 	ft_lst_delete(&list);

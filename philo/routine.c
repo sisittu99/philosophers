@@ -12,18 +12,22 @@
 
 #include "philosophers.h"
 
-void	*ft_philo_is_dying(void *list)
+int	ft_philo_is_dying(void *list)
 {
-	pthread_mutex_lock(&((t_list *)list)->arg->mutex_die);
-	ft_write_sms((t_list *)list, "DIED");
-	((t_list *)list)->arg->must_eat = -1;
-	pthread_mutex_unlock(&((t_list *)list)->arg->mutex_die);
+	if (ft_get_time() - ((t_list *)list)->die
+		>= ((t_list *)list)->arg->time_die)
+	{
+		pthread_mutex_lock(&((t_list *)list)->arg->mutex_die);
+		ft_write_sms((t_list *)list, "DIED");
+		((t_list *)list)->arg->must_eat = -1;
+		pthread_mutex_unlock(&((t_list *)list)->arg->mutex_die);
+		return (1);
+	}
 	return (0);
 }
 
 void	ft_philo_is_eating(void *list, t_list **tmp, int *i)
 {
-	ft_check_id(list, tmp);
 	((t_list *)list)->die = ft_get_time();
 	ft_write_sms((t_list *)list, "is eating");
 	ft_usleep(list, ((t_list *)list)->arg->time_eat);
@@ -55,11 +59,12 @@ void	*ft_routine(void *list)
 	while (((t_list *)list)->arg->must_eat != -1)
 	{
 		i = 0;
-		if (ft_get_time() - ((t_list *)list)->die
-			>= ((t_list *)list)->arg->time_die)
-			return (ft_philo_is_dying(list));
+		if (ft_philo_is_dying(list) == 1)
+			return (0);
 		if (((t_list *)list)->arg->nbr_philo == 1)
 			return (ft_lonely_philo(list));
+		if (ft_check_id(list, tmp) == 1)
+			return (0);
 		ft_philo_is_eating(list, tmp, &i);
 		if (((t_list *)list)->eat > 1 && i == 1)
 			((t_list *)list)->eat -= 1;

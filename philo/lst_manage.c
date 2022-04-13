@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:03:33 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/09 17:42:22 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/13 18:17:46 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int	ft_ph_init(t_list **list, t_args *arg)
 	}
 	tmp = (*list);
 	while ((*list)->next != NULL)
+	{
+		pthread_mutex_init(&(*list)->mutex, NULL);
 		*list = (*list)->next;
+	}
+	pthread_mutex_init(&(*list)->mutex, NULL);
 	(*list)->next = tmp;
 	*list = (*list)->next;
 	return (0);

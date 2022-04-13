@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:12:57 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/11 16:27:49 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/13 18:38:11 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ int	ft_usleep(void *list, int sleep)
 	start_time = ft_get_time();
 	while ((ft_get_time() - start_time) < sleep)
 	{
-		if ((ft_get_time() - ((t_list *)list)->die)
-			>= ((t_list *)list)->arg->time_die)
-			ft_philo_is_dying(list);
+		if (ft_philo_is_dying(list) == 1)
+			return (0);
 		if (((t_list *)list)->arg->must_eat == -1)
 			return (0);
 		usleep((sleep % 100) + 1);
