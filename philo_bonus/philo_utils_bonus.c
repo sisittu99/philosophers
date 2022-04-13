@@ -68,7 +68,8 @@ int	ft_atoi(const char *str)
 		return (-1);
 	while (*str)
 	{
-		if (!ft_isdigit(*str) || (j == 10 && y > 214748364))
+		if (!ft_isdigit(*str) || j > 11
+			|| (j == 10 && y > 214748364))
 			return (-1);
 		y = (y * 10) + ((*str - 48) % 10);
 		str++;

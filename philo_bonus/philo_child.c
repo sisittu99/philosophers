@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:16:04 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/12 20:06:13 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/13 12:46:51 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_child_set(t_args *arg)
 		ft_write_sms(arg, "is taking the left fork");
 		sem_post(arg->sem_odd);
 // !!!!!!!!!
-		if ((ft_get_time() - arg->time_left) + arg->time_eat >= arg->time_die)
+		if ((ft_get_time() - arg->time_left) + arg->time_eat >= arg->time_die && arg->nbr_philo % 2 == 1)
 			ft_usleep(arg,
 				(ft_get_time() - arg->time_left) + arg->time_eat + 1);
 // Problema con 4 410 200 200: blocca perché non sa che possono salvarsi
