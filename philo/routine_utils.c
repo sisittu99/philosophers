@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:47:35 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/14 18:20:27 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/14 18:23:23 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,26 @@ int	ft_check_id2(void *list, t_list **tmp, int time)
 	return (0);
 }
 
-int	ft_check_id(void *list, t_list **tmp)
+void	ft_wait(void *list, t_list **tmp)
 {
-	int	time;
-
-	time = ((ft_get_time() - ((t_list *)list)->die)
-			+ ((t_list *)list)->arg->time_eat);
 	while (1)
 	{
 		if (((t_list *)list)->fork == 1 && (*tmp)->fork == 1)
 		{
 			((t_list *)list)->fork = 0;
 			(*tmp)->fork = 0;
-			break ;
+			return ;
 		}
 	}
+}
+
+int	ft_check_id(void *list, t_list **tmp)
+{
+	int	time;
+
+	time = ((ft_get_time() - ((t_list *)list)->die)
+			+ ((t_list *)list)->arg->time_eat);
+	ft_wait(list, tmp);
 	if (((t_list *)list)->id_ph != ((t_list *)list)->arg->nbr_philo)
 	{
 		pthread_mutex_lock(&((t_list *)list)->mutex);

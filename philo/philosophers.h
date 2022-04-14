@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 16:33:16 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/14 16:38:00 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/04/14 18:23:58 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_args
 	int				start_time;
 	pthread_mutex_t	mutex_write;
 	pthread_mutex_t	mutex_die;
-	pthread_mutex_t	mutex_sem;
 }				t_args;
 
 // * LIST * //
