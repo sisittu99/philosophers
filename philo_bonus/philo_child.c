@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:16:04 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/13 19:36:49 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/14 16:11:12 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,10 @@ void	ft_child_set(t_args *arg)
 	while (1)
 	{
 		ft_check_dead(arg);
-		if (arg->id_ph == arg->nbr_philo && arg->nbr_philo != 1)
+		// if (arg->id_ph == arg->nbr_philo && arg->nbr_philo != 1)
 			sem_wait(arg->sem_odd);
 		sem_wait(arg->sem_fork);
 		ft_write_sms(arg, "is taking the left fork");
-		sem_post(arg->sem_odd);
 		if ((ft_get_time() - arg->time_left) + arg->time_eat
 			>= arg->time_die && arg->nbr_philo % 2 == 1)
 			ft_usleep(arg,
@@ -66,6 +65,7 @@ void	ft_child_set(t_args *arg)
 		sem_wait(arg->sem_fork);
 		ft_check_dead(arg);
 		ft_write_sms(arg, "is taking the right fork");
+		sem_post(arg->sem_odd);
 		arg->time_left = ft_get_time();
 		ft_write_sms(arg, "is eating");
 		ft_usleep(arg, arg->time_eat);
