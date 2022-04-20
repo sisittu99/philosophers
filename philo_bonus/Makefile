@@ -1,12 +1,12 @@
-	# **************************************************************************** #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+         #
+#    By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/30 15:29:33 by fdrudi            #+#    #+#              #
-#    Updated: 2022/04/05 14:09:43 by mcerchi          ###   ########.fr        #
+#    Updated: 2022/04/20 12:07:19 by fdrudi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC			=	philosophers_bonus.c philo_utils_bonus.c time_bonus.c\
 
 OBJ			=	$(SRC:.c=.o)
 
-CC			=	gcc -pthread #-fsanitize=address
+CC			=	gcc -pthread
 
 RM			=	rm -f
 

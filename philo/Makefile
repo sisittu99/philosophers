@@ -6,7 +6,7 @@
 #    By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/30 15:29:33 by fdrudi            #+#    #+#              #
-#    Updated: 2022/04/14 16:05:53 by fdrudi           ###   ########.fr        #
+#    Updated: 2022/04/20 12:07:28 by fdrudi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC			=	philosophers.c philo_utils.c lst_manage.c time.c routine.c\
 
 OBJ			=	$(SRC:.c=.o)
 
-CC			=	gcc -pthread -fsanitize=address
+CC			=	gcc -pthread
 
 RM			=	rm -f
 
