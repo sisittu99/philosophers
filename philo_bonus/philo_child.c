@@ -6,7 +6,7 @@
 /*   By: fdrudi <fdrudi@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:16:04 by fdrudi            #+#    #+#             */
-/*   Updated: 2022/04/20 12:03:13 by fdrudi           ###   ########.fr       */
+/*   Updated: 2022/04/26 10:42:05 by fdrudi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	ft_check_dead(t_args *arg)
 	if (ft_get_time() - arg->time_left >= arg->time_die)
 	{
 		ft_write_sms(arg, "DIED");
-		sem_post(arg->sem_die);
 		sem_wait(arg->sem_write);
+		sem_post(arg->sem_die);
 		free(arg->pid);
 		exit (1);
 	}
